@@ -1,0 +1,20 @@
+PROS
+- Very fast
+- Easy to install and use
+- Well documented
+- In
+- Interactive shell
+- Sophisticated queries: simple fetch, limit and sliding window retrieve, find by substring or array, aggregation (group, count, min/max, etc), powerful SQL-like server-side language
+- Atomic operations: increment/decrement value, push/pop array value
+- Indexes fields for fast lookups
+- Distributed filesystem with GridFS
+- Import/export to JSON and other formats
+- Master to many slaves replication
+- Replica pairs (they flip between being master and pair)
+
+
+CONS
+- Not meant to be transactional, more like MyISAM autocommit, but has some atomic operations (e.g., increment, pop, plus an eval)
+- Relatively new and unproven, although in use on a fair number of sites
+- Master-master replication works but is discouraged because there's no way to handle collisions
+- Update-in-place, not MVCC, so crashes harder and copes poorly with concurrent updates 

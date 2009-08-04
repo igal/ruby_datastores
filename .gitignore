@@ -1,0 +1,4 @@
+*.tmp
+*.diff
+.~lock*
+*.sqlite3
