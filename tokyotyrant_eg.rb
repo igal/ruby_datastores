@@ -39,6 +39,8 @@ s = elapsed do
 end
 puts "* %i retrieves by key per second individually, for %i items over %0.2f seconds" % [n/s, n, s]
 
+db.set_index('id', :decimal)
+
 s = elapsed do
   for i in 0...n
     item = db.query do |query|
