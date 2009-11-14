@@ -24,21 +24,21 @@ db = XGen::Mongo::Driver::Mongo.new("localhost", 27017).db("mydb")
 
 # Populate categories
 category_collection = db.collection("category")
-category_collection.drop
+category_collection.clear
 categories.each do |category|
   category_collection << category
 end
 
 # Populate tasks
 task_collection = db.collection("task")
-task_collection.drop
+task_collection.clear
 tasks.each do |task|
   task_collection << task
 end
 task_collection.create_index("category_id")
 
 # Find task by id
-task = task_collection.find_first(:_id => 1)
+task = task_collection.find(:_id => 1).first
 p task
 
 # Find tasks by category
@@ -75,32 +75,41 @@ s = elapsed do
 end
 puts "* %i inserts per second individually, for %i items over %0.2f seconds" % [n/s, n, s]
 
-benchmark_collection.clear
-s = elapsed do
-  benchmark_collection.insert(items)
-end
-puts "* %i inserts per second as group, for %i items over %0.2f seconds" % [n/s, n, s]
+#benchmark_collection.clear
+#s = elapsed do
+#  benchmark_collection.insert(items)
+#end
+#puts "* %i inserts per second as group, for %i items over %0.2f seconds" % [n/s, n, s]
+
+system "sync"
 
 s = elapsed do
   for i in 0...n
-    item = benchmark_collection.find_first("id" => i)
+    item = benchmark_collection.find("id" => i).first
     item["id"] == i or raise "Mismatch! Expected #{i}, got: #{item.inspect}"
   end
 end
 puts "* %i retrieves per second individually, for %i items over %0.2f seconds" % [n/s, n, s]
 
-seen = {}
-s = elapsed do
-  benchmark_collection.find.each do |item|
-    i = item["id"]
-    if seen[i]
-      raise "Already saw #{i}"
-    else
-      seen[i] = true
-    end
-  end
-end
-puts "* %i retrieves per second as group, for %i items over %0.2f seconds" % [n/s, n, s]
+# seen = {}
+# s = elapsed do
+#   benchmark_collection.find.each do |item|
+#     i = item["id"]
+#     if seen[i]
+#       raise "Already saw #{i}"
+#     else
+#       seen[i] = true
+#     end
+#   end
+# end
+# puts "* %i retrieves per second as group, for %i items over %0.2f seconds" % [n/s, n, s]
+
+
+#---[ Teardown ]--------------------------------------------------------
+
+category_collection.clear
+task_collection.clear
+benchmark_collection.clear
 
 =begin
 MRI 1.8.7
@@ -114,4 +123,8 @@ JRuby 1.3.1
 * 7158 inserts per second as group, for 10000 items over 1.40 seconds
 * 1845 retrieves per second individually, for 10000 items over 5.42 seconds
 * 6963 retrieves per second as group, for 10000 items over 1.44 seconds
+
+JRuby 1.4.0
+* 4366 inserts per second individually, for 10000 items over 2.29 seconds
+* 1680 retrieves per second individually, for 10000 items over 5.95 seconds
 =end
