@@ -39,15 +39,21 @@ task_collection.create_index("category_id")
 
 # Find task by id
 task = task_collection.find_one(:_id => 1)
-p task
+puts "* Find a task by id #1: #{task['title']}"
 
 # Find tasks by category
 tasks = task_collection.find(:category_id => 1)
-p tasks.to_a
+puts "* Find tasks by category #1:"
+tasks.each do |task|
+  puts "  - #{task['title']}"
+end
 
 # Find tasks by substring
 tasks = task_collection.find(:title => /in/)
-p tasks.to_a
+puts "* Query tasks matching regexp /in/:"
+tasks.each do |task|
+  puts "  - #{task['title']}"
+end
 
 #---[ Naive benchmarks ]------------------------------------------------
 
