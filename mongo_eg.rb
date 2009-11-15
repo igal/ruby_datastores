@@ -78,16 +78,16 @@ s = elapsed do
   for i in 0...n
     benchmark_collection << items[i]
   end
+  system "sync"
 end
 puts "* %i inserts per second individually, for %i items over %0.2f seconds" % [n/s, n, s]
 
 benchmark_collection.remove
 s = elapsed do
   benchmark_collection.insert(items)
+  system "sync"
 end
 puts "* %i inserts per second as group, for %i items over %0.2f seconds" % [n/s, n, s]
-
-system "sync"
 
 s = elapsed do
   for i in 0...n

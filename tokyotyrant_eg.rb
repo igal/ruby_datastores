@@ -28,6 +28,7 @@ s = elapsed do
   for i in 0...n
     db[i] = items[i]
   end
+  system "sync"
 end
 puts "* %i inserts per second individually, for %i items over %0.2f seconds" % [n/s, n, s]
 
