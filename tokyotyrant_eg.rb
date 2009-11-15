@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # Startup:
-### ttserver omg.tct
+### ttserver omg.tct#bnum=1000000
 
 require 'rubygems'
 require 'rufus/tokyo/tyrant'
@@ -16,7 +16,7 @@ def elapsed(&block)
   return Time.now - timer
 end
 
-n = 10000
+n = 10_000
 
 items = []
 for i in 0...n
@@ -67,8 +67,15 @@ end
 puts "* %i retrieves per second as group, for %i items over %0.2f seconds" % [n/s, n, s]
 
 =begin
-* 6204 inserts per second individually, for 10000 items over 1.38 seconds
-* 5787 retrieves by key per second individually, for 10000 items over 1.52 seconds
-* 196 retrieves by field per second individually, for 10000 items over 51.00 seconds
-* 3882 retrieves per second as group, for 10000 items over 2.42 seconds
+n=10_000
+* 6381 inserts per second individually, for 10000 items over 1.57 seconds
+* 5647 retrieves by key per second individually, for 10000 items over 1.77 seconds
+* 2128 retrieves by field per second individually, for 10000 items over 4.70 seconds
+* 3274 retrieves per second as group, for 10000 items over 3.05 seconds
+
+n=100_000
+* 6139 inserts per second individually, for 100000 items over 16.29 seconds
+* 5708 retrieves by key per second individually, for 100000 items over 17.52 seconds
+* 2213 retrieves by field per second individually, for 100000 items over 45.18 seconds
+* 3242 retrieves per second as group, for 100000 items over 30.84 seconds
 =end
