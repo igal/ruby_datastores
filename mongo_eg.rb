@@ -63,7 +63,7 @@ def elapsed(&block)
   return Time.now - timer
 end
 
-n = 10000
+n = 10_000
 
 benchmark_collection = db.collection("benchmark")
 benchmark_collection.create_index("id")
@@ -147,4 +147,12 @@ JRuby 1.4.0 with mongo 0.16 driver
 * 8928 inserts per second as group, for 10000 items over 1.12 seconds
 * 1819 retrieves per second individually, for 10000 items over 5.49 seconds
 * 6116 retrieves per second as group, for 10000 items over 1.63 seconds
+
+...
+
+MRI 1.8.7 with mongo 0.16 driver with C extensions
+* 3853 inserts per second individually, for 10000 items over 2.60 seconds
+* 1157 inserts per second as group, for 10000 items over 8.64 seconds
+* 1329 retrieves per second individually, for 10000 items over 7.52 seconds
+* 6955 retrieves per second as group, for 10000 items over 1.44 seconds
 =end
