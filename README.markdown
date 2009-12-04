@@ -22,4 +22,8 @@ Feedback
 Please submit patches, corrections or suggestions so that this information is
 unbiased, accurate and useful.
 
+License
+-------
+This code and information is distributed under a permissive MIT license. See the **LICENSE.txt** for details.
+
 -igal
